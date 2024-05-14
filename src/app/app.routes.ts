@@ -15,14 +15,14 @@ export const routes: Routes = [
     { path: 'admin', 
     component: PrincipalComponent, 
     children: [
-        { path: 'autor', component: AutoreslistComponent },
-        { path: 'autor/new', component: AutoresdetailsComponent },
-        { path: 'autor/edit/:id', component: AutoresdetailsComponent },
-        { path: 'editora', component: EditoraslistComponent },
-        { path: 'editora/new', component: EditorasdetailsComponent },
-        { path: 'editora/edit/:id', component: EditorasdetailsComponent },
-        { path: 'livro', component: LivroslistComponent },
-        { path: 'livro/new', component: LivrosdetailsComponent },
-        { path: 'livro/edit/:id', component: LivrosdetailsComponent },
+        { path: 'autores', component: AutoreslistComponent },
+        { path: 'autores/new', component: AutoresdetailsComponent },
+        { path: 'autores/edit/:id', component: AutoresdetailsComponent },
+        { path: 'editoras', component: EditoraslistComponent },
+        { path: 'editoras/new', component: EditorasdetailsComponent },
+        { path: 'editoras/edit/:id', component: EditorasdetailsComponent },
+        { path: 'livros', component: LivroslistComponent },
+        { path: 'livros/new', component: LivrosdetailsComponent },
+        { path: 'livros/edit/:id', component: LivrosdetailsComponent },
     ]}
 ];
