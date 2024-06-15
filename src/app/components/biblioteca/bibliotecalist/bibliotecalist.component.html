@@ -7,9 +7,10 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h3>Listagem de Autores</h3>
+                    <h3>Listagem de Bibliotecas</h3>
                     <div class="direita">
-                        <button type="button" class="btn btn-primary btn-rounded" mdbRipple routerLink="/admin/autores/new" >
+                        <button type="button" class="btn btn-primary btn-rounded" mdbRipple
+                            routerLink="/admin/bibliotecas/new">
                             Novo
                         </button>
                     </div>
@@ -23,19 +24,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for (autor of lista; track $index) {
+                            @for (biblioteca of lista; track $index) {
                             <tr>
-                                <td>{{ autor.id_autor }}</td>
-                                <td>{{ autor.nome_autor }}</td>
+                                <td>{{ biblioteca.id_biblioteca }}</td>
+                                <td>{{ biblioteca.nome_biblioteca }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple routerLink="/admin/autores/edit/{{ autor.id_autor }}" >
+                                    <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple
+                                        routerLink="/admin/bibliotecas/edit/{{ biblioteca.id_biblioteca }}">
                                         Editar
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-rounded float-end" mdbRipple (click)="deleteById( autor.id_autor )" >
+                                    <button type="button" class="btn btn-danger btn-rounded float-end" mdbRipple
+                                        (click)="deleteById( biblioteca.id_biblioteca )">
                                         Deletar
                                     </button>
                                 </td>
-                            </tr>   
+                            </tr>
                             }
                         </tbody>
                     </table>

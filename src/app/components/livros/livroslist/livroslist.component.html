@@ -1,1 +1,52 @@
-<p>livroslist works!</p>
+<br>
+<div class="container centralizar">
+    <div class="row">
+
+        <div class="col-lg-12"></div>
+
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Listagem de Livros</h3>
+                    <div class="direita">
+                        <button type="button" class="btn btn-primary btn-rounded" mdbRipple
+                            routerLink="/admin/livros/new">
+                            Novo
+                        </button>
+                    </div>
+                    <br>
+                    <table class="table table-striped border">
+                        <thead class="border">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th class="float-end" style="margin-right: 115px;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (livro of lista; track $index) {
+                            <tr>
+                                <td>{{ livro.id_livro }}</td>
+                                <td>{{ livro.nome_livro }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple
+                                        routerLink="/admin/livros/edit/{{ livro.id_livro }}">
+                                        Editar
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-rounded float-end" mdbRipple
+                                        (click)="deleteById( livro.id_livro )">
+                                        Deletar
+                                    </button>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4"></div>
+
+    </div>
+</div>
