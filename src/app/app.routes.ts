@@ -7,6 +7,8 @@ import { EditoraslistComponent } from './components/editoras/editoraslist/editor
 import { EditorasdetailsComponent } from './components/editoras/editorasdetails/editorasdetails.component';
 import { LivroslistComponent } from './components/livros/livroslist/livroslist.component';
 import { LivrosdetailsComponent } from './components/livros/livrosdetails/livrosdetails.component';
+import { BibliotecalistComponent } from './components/biblioteca/bibliotecalist/bibliotecalist.component';
+import { BibliotecadetailsComponent } from './components/biblioteca/bibliotecadetails/bibliotecadetails.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -24,5 +26,8 @@ export const routes: Routes = [
         { path: 'livros', component: LivroslistComponent },
         { path: 'livros/new', component: LivrosdetailsComponent },
         { path: 'livros/edit/:id', component: LivrosdetailsComponent },
+        { path: 'bibliotecas', component: BibliotecalistComponent },
+        { path: 'bibliotecas/new', component: BibliotecadetailsComponent },
+        { path: 'bibliotecas/edit/:id', component: BibliotecadetailsComponent },
     ]}
 ];
