@@ -9,7 +9,10 @@
                 <div class="card-body">
                     <h3>Listagem de Autores</h3>
                     <div class="direita">
-                        <button type="button" class="btn btn-primary btn-rounded" mdbRipple routerLink="/admin/autores/new" >
+                        <!-- <button type="button" class="btn btn-primary btn-rounded" mdbRipple routerLink="/admin/autores/new" >
+                            Novo
+                        </button> -->
+                        <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="new()" >
                             Novo
                         </button>
                     </div>
@@ -28,7 +31,10 @@
                                 <td>{{ autor.id_autor }}</td>
                                 <td>{{ autor.nome_autor }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple routerLink="/admin/autores/edit/{{ autor.id_autor }}" >
+                                    <!-- <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple routerLink="/admin/autores/edit/{{ autor.id_autor }}" >
+                                        Editar
+                                    </button> -->
+                                    <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple (click)="edit(autor)" >
                                         Editar
                                     </button>
                                     <button type="button" class="btn btn-danger btn-rounded float-end" mdbRipple (click)="deleteById( autor.id_autor )" >
@@ -47,3 +53,13 @@
 
     </div>
 </div>
+
+<ng-template #modalAutorDetails>
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cadastro de Autor:</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+    </div>
+    <div class="modal-body">
+        <app-autoresdetails [autor]="autorEdit" (retorno)="retornoDetails($event)"></app-autoresdetails>
+    </div>
+</ng-template>

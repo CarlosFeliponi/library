@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Autor } from '../../../models/autor';
@@ -12,10 +12,10 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './autoresdetails.component.scss'
 })
 export class AutoresdetailsComponent {
-  autor: Autor = new Autor(0, ""); //deve ser preenjito de forma vazia, para caso cheja um new, ele vai preencher o campo do input de forma vazia e não vão ocorrer erro no log
+  @Input("autor") autor: Autor = new Autor(0, ""); //deve ser preenjito de forma vazia, para caso cheja um new, ele vai preencher o campo do input de forma vazia e não vão ocorrer erro no log
+  @Output("retorno") retorno = new EventEmitter<any>();
 
   router = inject(ActivatedRoute); // snapshot.params
-
   router2 = inject(Router); //navegate
   
   constructor(){
@@ -41,5 +41,6 @@ export class AutoresdetailsComponent {
       alert("Autor salvo")
       this.router2.navigate(['admin/autores'], {state: {autorNovo: this.autor}})
     }
+    this.retorno.emit(this.autor);
    }
 }
