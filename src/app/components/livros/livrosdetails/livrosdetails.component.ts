@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, output } from '@angular/core';
 import { Livro } from '../../../models/livro';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
@@ -12,10 +12,10 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './livrosdetails.component.scss'
 })
 export class LivrosdetailsComponent {
-  livro: Livro = new Livro(0, '');
+  @Input("livro") livro: Livro = new Livro(0, '');
+  @Output("retorno") retorno = new EventEmitter<any>();
 
   router = inject(ActivatedRoute);
-
   router2 = inject(Router);
 
   constructor() {
@@ -38,5 +38,6 @@ export class LivrosdetailsComponent {
       alert("Livro salvo")
       this.router2.navigate(['admin/livros'], { state: { livroNovo: this.livro } })
     }
+    this.retorno.emit(this.livro)
   }
 }

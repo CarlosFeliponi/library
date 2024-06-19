@@ -1,17 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Livro } from '../../../models/livro';
 import Swal from 'sweetalert2';
+import { MdbModalModule, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { LivrosdetailsComponent } from '../livrosdetails/livrosdetails.component';
+import { findIndex } from 'rxjs';
 
 @Component({
   selector: 'app-livroslist',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, MdbModalModule, LivrosdetailsComponent],
   templateUrl: './livroslist.component.html',
   styleUrl: './livroslist.component.scss'
 })
 export class LivroslistComponent {
   lista: Livro[] = [];
+  livroEdit: Livro = new Livro(0,"");
+
+  modalService = inject(MdbModalService);
+  @ViewChild("modalLivroDetails") modalLivroDetails!: TemplateRef<any>;
+  modalRef!: MdbModalRef<any>;
 
   constructor() {
     this.lista.push(new Livro(1, 'O senhor do anéis'));
@@ -54,5 +62,27 @@ export class LivroslistComponent {
         })
       }
     });
+  }
+
+  new() {
+    this.livroEdit = new Livro(0,'');
+    this.modalRef = this.modalService.open(this.modalLivroDetails);
+
+  }
+
+  edit(livro: Livro) {
+    this.livroEdit = Object.assign({}, livro);
+    this.modalRef = this.modalService.open(this.modalLivroDetails);
+  }
+
+  retornoDetails(livro: Livro) {
+    if (livro.id_livro <= 0) {
+      this.lista.push(livro)
+      livro.id_livro = this.lista.length;   
+    } else {
+      let indice = this.lista.findIndex( x => { return x.id_livro == livro.id_livro })
+      this.lista[indice] = livro
+    }
+    this.modalRef.close();
   }
 }

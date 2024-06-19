@@ -9,8 +9,12 @@
                 <div class="card-body">
                     <h3>Listagem de Bibliotecas</h3>
                     <div class="direita">
-                        <button type="button" class="btn btn-primary btn-rounded" mdbRipple
+                        <!-- <button type="button" class="btn btn-primary btn-rounded" mdbRipple
                             routerLink="/admin/bibliotecas/new">
+                            Novo
+                        </button> -->
+                        <button type="button" class="btn btn-primary btn-rounded" mdbRipple
+                            (click)="new()">
                             Novo
                         </button>
                     </div>
@@ -29,8 +33,12 @@
                                 <td>{{ biblioteca.id_biblioteca }}</td>
                                 <td>{{ biblioteca.nome_biblioteca }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple
+                                    <!-- <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple
                                         routerLink="/admin/bibliotecas/edit/{{ biblioteca.id_biblioteca }}">
+                                        Editar
+                                    </button> -->
+                                    <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple
+                                        (click)="edit(biblioteca)">
                                         Editar
                                     </button>
                                     <button type="button" class="btn btn-danger btn-rounded float-end" mdbRipple
@@ -50,3 +58,13 @@
 
     </div>
 </div>
+
+<ng-template #modalBibliotecaDetails>
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Cadastro de Biblioteca:</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+</div>
+<div class="modal-body">
+    <app-bibliotecadetails [biblioteca]="bibliotecaEdit" (retorno)="retornoDetails($event)"></app-bibliotecadetails>
+</div>
+</ng-template>

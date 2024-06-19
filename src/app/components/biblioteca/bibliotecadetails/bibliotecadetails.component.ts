@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Biblioteca } from '../../../models/biblioteca';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
@@ -12,10 +12,10 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './bibliotecadetails.component.scss'
 })
 export class BibliotecadetailsComponent {
-  biblioteca: Biblioteca = new Biblioteca(0, '');
+  @Input("biblioteca") biblioteca: Biblioteca = new Biblioteca(0, '');
+  @Output("retorno") retorno = new EventEmitter<any>();
 
   router = inject(ActivatedRoute);
-
   router2 = inject(Router);
 
   constructor() {
@@ -38,5 +38,6 @@ export class BibliotecadetailsComponent {
       alert("Biblioteca salvo")
       this.router2.navigate(['admin/bibliotecas'], { state: { bibliotecaNovo: this.biblioteca } })
     }
+    this.retorno.emit(this.biblioteca);
   }
 }

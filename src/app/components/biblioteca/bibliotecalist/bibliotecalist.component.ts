@@ -1,17 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Biblioteca } from '../../../models/biblioteca';
 import Swal from 'sweetalert2';
+import { MdbModalModule, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { BibliotecadetailsComponent } from '../bibliotecadetails/bibliotecadetails.component';
 
 @Component({
   selector: 'app-bibliotecalist',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, MdbModalModule, BibliotecadetailsComponent],
   templateUrl: './bibliotecalist.component.html',
   styleUrl: './bibliotecalist.component.scss'
 })
 export class BibliotecalistComponent {
   lista: Biblioteca[] = [];
+  bibliotecaEdit: Biblioteca = new Biblioteca(0, '');
+
+  modalService = inject(MdbModalService);
+  @ViewChild("modalBibliotecaDetails") modalBibliotecaDetails!: TemplateRef<any>;
+  modalRef!: MdbModalRef<any>;
 
   constructor() {
     this.lista.push(new Biblioteca(1, 'Biblioteca Nacional de Praga'));
@@ -55,5 +62,26 @@ export class BibliotecalistComponent {
         })
       }
     });
+  }
+
+  new() {
+    this.bibliotecaEdit = new Biblioteca(0, '')
+    this.modalRef = this.modalService.open(this.modalBibliotecaDetails);
+  }
+
+  edit(biblioteca: Biblioteca) {
+    this.bibliotecaEdit = Object.assign({}, biblioteca);
+    this.modalRef = this.modalService.open(this.modalBibliotecaDetails);
+  }
+
+  retornoDetails(biblioteca: Biblioteca) {
+    if (biblioteca.id_biblioteca <= 0) {
+      this.lista.push(biblioteca)
+      biblioteca.id_biblioteca = this.lista.length;
+    } else {
+      let indice = this.lista.findIndex(x => { return x.id_biblioteca == biblioteca.id_biblioteca });
+      this.lista[indice] = biblioteca;
+    }
+    this.modalRef.close();
   }
 }
