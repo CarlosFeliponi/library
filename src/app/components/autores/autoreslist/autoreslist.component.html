@@ -28,16 +28,16 @@
                         <tbody>
                             @for (autor of lista; track $index) {
                             <tr>
-                                <td>{{ autor.id_autor }}</td>
-                                <td>{{ autor.nome_autor }}</td>
+                                <td>{{ autor.id }}</td>
+                                <td>{{ autor.nome }}</td>
                                 <td>
-                                    <!-- <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple routerLink="/admin/autores/edit/{{ autor.id_autor }}" >
+                                    <!-- <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple routerLink="/admin/autores/edit/{{ autor.id }}" >
                                         Editar
                                     </button> -->
                                     <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple (click)="edit(autor)" >
                                         Editar
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-rounded float-end" mdbRipple (click)="deleteById( autor.id_autor )" >
+                                    <button type="button" class="btn btn-danger btn-rounded float-end" mdbRipple (click)="deleteById( autor.id )" >
                                         Deletar
                                     </button>
                                 </td>
