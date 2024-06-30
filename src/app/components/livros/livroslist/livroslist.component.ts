@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { MdbModalModule, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { LivrosdetailsComponent } from '../livrosdetails/livrosdetails.component';
 import { findIndex } from 'rxjs';
+import { LivroService } from '../../../services/livro.service';
 
 @Component({
   selector: 'app-livroslist',
@@ -17,32 +18,30 @@ export class LivroslistComponent {
   lista: Livro[] = [];
   livroEdit: Livro = new Livro(0,"");
 
+  livroService = inject(LivroService);
+
   modalService = inject(MdbModalService);
   @ViewChild("modalLivroDetails") modalLivroDetails!: TemplateRef<any>;
   modalRef!: MdbModalRef<any>;
 
   constructor() {
-    this.lista.push(new Livro(1, 'O senhor do anéis'));
-    this.lista.push(new Livro(2, 'As crônicas de gelo e fogo'));
-    this.lista.push(new Livro(3, 'Rápido e devagar: Duas formas de pensar'));
-    this.lista.push(new Livro(4, 'O Hobbit'));
-    this.lista.push(new Livro(5, 'O poder do hábito'));
+    this.listAll();    
 
     let livroNovo = history.state.livroNovo;
     let livroEditado = history.state.livroEditado;
 
     if (livroNovo) {
-      livroNovo.id_livro = this.lista.length + 1;
+      livroNovo.id = this.lista.length + 1;
       this.lista.push(livroNovo);
     }
 
     if (livroEditado) {
-      let indice = this.lista.findIndex(x => { return x.id_livro == livroEditado.id_livro });
+      let indice = this.lista.findIndex(x => { return x.id == livroEditado.id });
       this.lista[indice] = livroEditado;
     }
   }
 
-  deleteById(id_livro: number) {
+  deleteById(id: number) {
     Swal.fire({
       title: 'Tem certeza?',
       icon: 'warning',
@@ -52,13 +51,21 @@ export class LivroslistComponent {
       cancelButtonText: "Não!",
     }).then((result) => {
       if (result.isConfirmed) {
-        let indice = this.lista.findIndex(x => { return x.id_livro == id_livro })
-        this.lista.splice(indice, 1);
-
-        Swal.fire({
-          title: 'Deletado com sucesso!',
-          icon: 'success',
-          confirmButtonText: 'OK'
+        this.livroService.delete(id).subscribe({
+          next: value => {
+            Swal.fire({
+              title: value,
+              icon: 'success',
+              confirmButtonText: 'OK'
+            })
+            this.listAll();
+          }, error: erro => {
+            Swal.fire({
+              title: erro,
+              icon: 'error',
+              confirmButtonText: 'OK'
+            })
+          }
         })
       }
     });
@@ -76,13 +83,18 @@ export class LivroslistComponent {
   }
 
   retornoDetails(livro: Livro) {
-    if (livro.id_livro <= 0) {
-      this.lista.push(livro)
-      livro.id_livro = this.lista.length;   
-    } else {
-      let indice = this.lista.findIndex( x => { return x.id_livro == livro.id_livro })
-      this.lista[indice] = livro
-    }
+    this.listAll();
     this.modalRef.close();
+  }
+
+  listAll() {
+    this.livroService.listAll().subscribe ({
+      next: value => {
+        this.lista = value;
+      }, error: erro => {
+        alert("Erro com exemplo de tratamento");
+        console.error(erro);
+      }
+    })
   }
 }
