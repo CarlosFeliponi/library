@@ -31,7 +31,7 @@ export class BibliotecadetailsComponent {
   }
 
   save() {
-    if (this.biblioteca.id_biblioteca > 0) {
+    if (this.biblioteca.id > 0) {
       alert("Biblioteca editado")
       this.router2.navigate(['admin/bibliotecas'], { state: { bibliotecaEditado: this.biblioteca } })
     } else {

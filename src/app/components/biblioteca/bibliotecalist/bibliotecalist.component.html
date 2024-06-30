@@ -30,11 +30,11 @@
                         <tbody>
                             @for (biblioteca of lista; track $index) {
                             <tr>
-                                <td>{{ biblioteca.id_biblioteca }}</td>
-                                <td>{{ biblioteca.nome_biblioteca }}</td>
+                                <td>{{ biblioteca.id }}</td>
+                                <td>{{ biblioteca.nome }}</td>
                                 <td>
                                     <!-- <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple
-                                        routerLink="/admin/bibliotecas/edit/{{ biblioteca.id_biblioteca }}">
+                                        routerLink="/admin/bibliotecas/edit/{{ biblioteca.id }}">
                                         Editar
                                     </button> -->
                                     <button type="button" class="btn btn-primary btn-rounded float-end me-5" mdbRipple
@@ -42,7 +42,7 @@
                                         Editar
                                     </button>
                                     <button type="button" class="btn btn-danger btn-rounded float-end" mdbRipple
-                                        (click)="deleteById( biblioteca.id_biblioteca )">
+                                        (click)="deleteById( biblioteca.id )">
                                         Deletar
                                     </button>
                                 </td>

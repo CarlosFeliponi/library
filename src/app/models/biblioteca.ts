@@ -1,9 +1,9 @@
 export class Biblioteca {
-    id_biblioteca: number;
-    nome_biblioteca: string;
+    id: number;
+    nome: string;
 
-    constructor(id_biblioteca: number, nome_biblioteca: string) {
-        this.id_biblioteca = id_biblioteca;
-        this.nome_biblioteca = nome_biblioteca;
+    constructor(id: number, nome: string) {
+        this.id = id;
+        this.nome = nome;
     }
 }

@@ -31,18 +31,18 @@ export class BibliotecalistComponent {
     let bibliotecaEditado = history.state.bibliotecaEditado;
 
     if (bibliotecaNovo) {
-      bibliotecaNovo.id_biblioteca = this.lista.length + 1;
+      bibliotecaNovo.id = this.lista.length + 1;
       this.lista.push(bibliotecaNovo);
     }
 
     if (bibliotecaEditado) {
-      let indice = this.lista.findIndex(x => { return x.id_biblioteca == bibliotecaEditado.id_biblioteca })
+      let indice = this.lista.findIndex(x => { return x.id == bibliotecaEditado.id })
       this.lista[indice] = bibliotecaEditado;
 
     }
   }
 
-  deleteById(id_biblioteca: number) {
+  deleteById(id: number) {
     Swal.fire({
       title: 'Tem certeza?',
       icon: 'warning',
@@ -52,7 +52,7 @@ export class BibliotecalistComponent {
       cancelButtonText: "Não!",
     }).then((result) => {
       if (result.isConfirmed) {
-        let indice = this.lista.findIndex(x => { return x.id_biblioteca == id_biblioteca })
+        let indice = this.lista.findIndex(x => { return x.id == id })
         this.lista.splice(indice, 1);
 
         Swal.fire({
@@ -75,11 +75,11 @@ export class BibliotecalistComponent {
   }
 
   retornoDetails(biblioteca: Biblioteca) {
-    if (biblioteca.id_biblioteca <= 0) {
+    if (biblioteca.id <= 0) {
       this.lista.push(biblioteca)
-      biblioteca.id_biblioteca = this.lista.length;
+      biblioteca.id = this.lista.length;
     } else {
-      let indice = this.lista.findIndex(x => { return x.id_biblioteca == biblioteca.id_biblioteca });
+      let indice = this.lista.findIndex(x => { return x.id == biblioteca.id });
       this.lista[indice] = biblioteca;
     }
     this.modalRef.close();
