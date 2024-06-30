@@ -4,6 +4,7 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Editora } from '../../../models/editora';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { EditoraService } from '../../../services/editora.service';
 
 @Component({
   selector: 'app-editorasdetails',
@@ -20,6 +21,8 @@ export class EditorasdetailsComponent {
   router = inject(ActivatedRoute);
   router2 = inject(Router);
 
+  editoraService = inject(EditoraService);
+
   constructor() {
     let editoraRecebida = this.router.snapshot.params['id'];
 
@@ -29,27 +32,39 @@ export class EditorasdetailsComponent {
   }
 
   findById(id: number) {
-    let editoraRetornado: Editora = new Editora(id, 'DarkSide');
-    this.editora = editoraRetornado;
+    this.editoraService.findById(id).subscribe({
+      next: value => {
+        this.editora = value;
+      }, error: erro => {
+        alert("Ocorreu um erro!");
+        console.error(erro);
+      }
+    });
   }
 
   save() {
-    if (this.editora.id_editora <= 0) {
-      Swal.fire({
-        title: 'Editora salva!',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      })
-      // this.editora.id_editora = 555;
-      this.router2.navigate(['admin/editoras'], { state: { editoraNovo: this.editora } });
+    if (this.editora.id <= 0) {
+      this.editoraService.save(this.editora).subscribe({
+        next: value => {
+          alert(value);   
+          this.router2.navigate(['admin/editoras']);       
+          this.retorno.emit();
+        }, error: erro => {
+          alert("Ocorreu um erro!");
+          console.error(erro);
+        }
+      }); 
     } else {
-      Swal.fire({
-        title: 'Editora editada!',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      })
-      this.router2.navigate(['admin/editoras'], { state: { editoraEditado: this.editora } })
+      this.editoraService.update(this.editora).subscribe({
+        next: value => {
+          alert(value);
+          this.router2.navigate(['admin/editoras']);
+          this.retorno.emit();
+        }, error: erro => {
+          alert("Ocorreu um erro!");
+          console.error(erro);
+        }
+      });
     }
-    this.retorno.emit(this.editora);
   }
 }
