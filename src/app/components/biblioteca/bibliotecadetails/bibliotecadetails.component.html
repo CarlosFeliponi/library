@@ -11,7 +11,7 @@
                     <br>
                     <mdb-form-control>
                         <input mdbInput type="text" id="usuario" class="form-control"
-                            [(ngModel)]="biblioteca.nome" />
+                            [(ngModel)]="biblioteca.nome" (keyup.enter)="save()"/>
                         <label mdbLabel class="form-label" for="usuario">Nome</label>
                     </mdb-form-control>
                     <br>
